@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f7fa;
+  }
+  header {
+    background: #2b6cb0;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  input {
+    padding: 8px;
+    width: 60%;
+    margin-top: 10px;
+  }
+  button {
+    padding: 8px 16px;
+    margin-left: 10px;
+  }
+  

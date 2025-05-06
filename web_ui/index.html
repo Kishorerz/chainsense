@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChainSense Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>ChainSense: Secure Industrial IoT Logging</h1>
+  </header>
+
+  <main>
+    <section class="card" id="temp-display">
+      <h2>🌡️ Live Temperature</h2>
+      <p id="temperature">Loading...</p>
+    </section>
+
+    <section class="card">
+      <h2>🧾 Blockchain Logs</h2>
+      <table>
+        <thead>
+          <tr><th>Timestamp</th><th>Hash</th></tr>
+        </thead>
+        <tbody id="logs-table">
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>🔍 Tamper Check</h2>
+      <input type="text" id="check-input" placeholder="Enter original data..." />
+      <button onclick="verifyData()">Verify</button>
+      <p id="check-result"></p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
