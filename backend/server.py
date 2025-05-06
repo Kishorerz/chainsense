@@ -2,118 +2,79 @@ from flask import Flask, jsonify, request
 from web3 import Web3
 import hashlib
 import time
+from flask import Flask, render_template, request, jsonify
+import os
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder=os.path.join(os.path.dirname(__file__), '..', 'web_ui', 'static'),
+    template_folder=os.path.join(os.path.dirname(__file__), '..', 'web_ui', 'templates')
+)
 
-# Connect to local blockchain
-w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Ganache
-contract_address = '0x3ce64511d5A86484C51Cf7D02D452af8D2CDa460'
-contract_abi = [{
-  "accounts": {
-    "account{0}": "0x3Cb30c51a550be043CCAa08CDD610477659B1671"
-  },
-  "linkReferences": {},
-  "transactions": [
-    {
-      "timestamp": 1746523828757,
-      "record": {
-        "value": "0",
-        "inputs": "()",
-        "parameters": [],
-        "name": "",
-        "type": "constructor",
-        "abi": "0x3eed3ac93286cc807e961db2ce07426c4042f4cb422c3b072dea96b53fd0d53e",
-        "contractName": "ChainSenseLog",
-        "bytecode": "608060405234801561001057600080fd5b506107a5806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c80633206b2c61461005157806391dc956d14610082578063bd628d261461009e578063e79899bd146100bc575b600080fd5b61006b600480360381019061006691906104d2565b6100ed565b604051610079929190610583565b60405180910390f35b61009c60048036038101906100979190610491565b61023d565b005b6100a66102a9565b6040516100b391906105d3565b60405180910390f35b6100d660048036038101906100d191906104d2565b6102b5565b6040516100e4929190610583565b60405180910390f35b6060600080805490508310610137576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161012e906105b3565b60405180910390fd5b6000808481548110610172577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b906000526020600020906002020160405180604001604052908160008201805461019b906106b7565b80601f01602080910402602001604051908101604052809291908181526020018280546101c7906106b7565b80156102145780601f106101e957610100808354040283529160200191610214565b820191906000526020600020905b8154815290600101906020018083116101f757829003601f168201915b505050505081526020016001820154815250509050806000015181602001519250925050915091565b600060405180604001604052808381526020014281525090806001815401808255809150506001900390600052602060002090600202016000909190919091506000820151816000019080519060200190610299929190610371565b5060208201518160010155505050565b60008080549050905090565b600081815481106102c557600080fd5b90600052602060002090600202016000915090508060000180546102e8906106b7565b80601f0160208091040260200160405190810160405280929190818152602001828054610314906106b7565b80156103615780601f1061033657610100808354040283529160200191610361565b820191906000526020600020905b81548152906001019060200180831161034457829003601f168201915b5050505050908060010154905082565b82805461037d906106b7565b90600052602060002090601f01602090048101928261039f57600085556103e6565b82601f106103b857805160ff19168380011785556103e6565b828001600101855582156103e6579182015b828111156103e55782518255916020019190600101906103ca565b5b5090506103f391906103f7565b5090565b5b808211156104105760008160009055506001016103f8565b5090565b60006104276104228461061f565b6105ee565b90508281526020810184848401111561043f57600080fd5b61044a848285610675565b509392505050565b600082601f83011261046357600080fd5b8135610473848260208601610414565b91505092915050565b60008135905061048b81610758565b92915050565b6000602082840312156104a357600080fd5b600082013567ffffffffffffffff8111156104bd57600080fd5b6104c984828501610452565b91505092915050565b6000602082840312156104e457600080fd5b60006104f28482850161047c565b91505092915050565b60006105068261064f565b610510818561065a565b9350610520818560208601610684565b61052981610747565b840191505092915050565b6000610541600d8361065a565b91507f496e76616c696420696e646578000000000000000000000000000000000000006000830152602082019050919050565b61057d8161066b565b82525050565b6000604082019050818103600083015261059d81856104fb565b90506105ac6020830184610574565b9392505050565b600060208201905081810360008301526105cc81610534565b9050919050565b60006020820190506105e86000830184610574565b92915050565b6000604051905081810181811067ffffffffffffffff8211171561061557610614610718565b5b8060405250919050565b600067ffffffffffffffff82111561063a57610639610718565b5b601f19601f8301169050602081019050919050565b600081519050919050565b600082825260208201905092915050565b6000819050919050565b82818337600083830152505050565b60005b838110156106a2578082015181840152602081019050610687565b838111156106b1576000848401525b50505050565b600060028204905060018216806106cf57607f821691505b602082108114156106e3576106e26106e9565b5b50919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6000601f19601f8301169050919050565b6107618161066b565b811461076c57600080fd5b5056fea26469706673582212209879c71da89e587bde2485248bb7e21c73c70f75dbce936474a83f728dd9bc3d64736f6c63430008000033",
-        "linkReferences": {},
-        "from": "account{0}"
-      }
+from flask import Flask, jsonify, request, send_from_directory
+import os
+
+app = Flask(__name__, static_folder='../web_ui', static_url_path='')
+
+@app.route('/')
+def serve_index():
+    return send_from_directory(app.static_folder, 'index.html')
+
+# Existing routes...
+
+
+# Connect to local Ganache blockchain
+w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
+contract_address = '0x88925D6b81244179F0B1256D6A145f5173dE2d70'
+
+# ABI Dictionary (trimmed to the relevant "abis" portion)
+abi_dict = {
+    "abis": {
+        "0x3eed3ac93286cc807e961db2ce07426c4042f4cb422c3b072dea96b53fd0d53e": [
+            {
+                "inputs": [{"internalType": "string", "name": "_hash", "type": "string"}],
+                "name": "addLog",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [{"internalType": "uint256", "name": "_index", "type": "uint256"}],
+                "name": "getLog",
+                "outputs": [
+                    {"internalType": "string", "name": "", "type": "string"},
+                    {"internalType": "uint256", "name": "", "type": "uint256"}
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getTotalLogs",
+                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "name": "logs",
+                "outputs": [
+                    {"internalType": "string", "name": "dataHash", "type": "string"},
+                    {"internalType": "uint256", "name": "timestamp", "type": "uint256"}
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ]
     }
-  ],
-  "abis": {
-    "0x3eed3ac93286cc807e961db2ce07426c4042f4cb422c3b072dea96b53fd0d53e": [
-      {
-        "inputs": [
-          {
-            "internalType": "string",
-            "name": "_hash",
-            "type": "string"
-          }
-        ],
-        "name": "addLog",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "_index",
-            "type": "uint256"
-          }
-        ],
-        "name": "getLog",
-        "outputs": [
-          {
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getTotalLogs",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "name": "logs",
-        "outputs": [
-          {
-            "internalType": "string",
-            "name": "dataHash",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      }
-    ]
-  }
-}]  # Paste ABI JSON array here
+}
 
+# Extract the correct ABI
+contract_abi = abi_dict["abis"]["0x3eed3ac93286cc807e961db2ce07426c4042f4cb422c3b072dea96b53fd0d53e"]
 contract = w3.eth.contract(address=contract_address, abi=contract_abi)
 account = w3.eth.accounts[0]
 
-# Simulated temperature for frontend
+# Simulated sensor data
 current_temp = 31.4
 
 @app.route("/temp")
@@ -139,3 +100,19 @@ def verify():
 
 if __name__ == "__main__":
     app.run(debug=True)
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+  return send_from_directory('web_ui/build', 'index.html')
+
+@app.route("/")
+def serve_index():
+    return send_from_directory("../web_ui", "index.html")
+
+@app.route("/<path:path>")
+def serve_static_files(path):
+    return send_from_directory("../web_ui", path)
+@app.route('/')
+def index():
+    return render_template('index.html')
+print("Total logs:", contract.functions.getTotalLogs().call())

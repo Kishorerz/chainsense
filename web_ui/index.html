@@ -1,40 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>ChainSense Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>ChainSense: Secure Industrial IoT Logging</h1>
-  </header>
+  <div class="container">
+    <h1>🌐 ChainSense Dashboard</h1>
 
-  <main>
-    <section class="card" id="temp-display">
-      <h2>🌡️ Live Temperature</h2>
+    <section class="card">
+      <h2>🌡️ Current Temperature</h2>
       <p id="temperature">Loading...</p>
     </section>
 
     <section class="card">
-      <h2>🧾 Blockchain Logs</h2>
-      <table>
-        <thead>
-          <tr><th>Timestamp</th><th>Hash</th></tr>
-        </thead>
-        <tbody id="logs-table">
-        </tbody>
-      </table>
+      <h2>📜 Blockchain Logs</h2>
+      <ul id="log-list">Loading...</ul>
     </section>
 
     <section class="card">
-      <h2>🔍 Tamper Check</h2>
-      <input type="text" id="check-input" placeholder="Enter original data..." />
-      <button onclick="verifyData()">Verify</button>
-      <p id="check-result"></p>
+      <h2>✅ Verify Data</h2>
+      <form id="verify-form">
+        <input type="text" id="data-input" placeholder="Enter data to verify" required />
+        <button type="submit">Verify</button>
+      </form>
+      <div id="verify-result" class="result"></div>
     </section>
-  </main>
+  </div>
 
   <script src="app.js"></script>
 </body>
