@@ -25,48 +25,88 @@ def serve_index():
 
 # Connect to local Ganache blockchain
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
-contract_address = '0x88925D6b81244179F0B1256D6A145f5173dE2d70'
+contract_address = '0xb3Ea254CBDEcbf9750fBF0BE10af5BA94ABce7c7'
 
 # ABI Dictionary (trimmed to the relevant "abis" portion)
 abi_dict = {
     "abis": {
-        "0x3eed3ac93286cc807e961db2ce07426c4042f4cb422c3b072dea96b53fd0d53e": [
-            {
-                "inputs": [{"internalType": "string", "name": "_hash", "type": "string"}],
-                "name": "addLog",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [{"internalType": "uint256", "name": "_index", "type": "uint256"}],
-                "name": "getLog",
-                "outputs": [
-                    {"internalType": "string", "name": "", "type": "string"},
-                    {"internalType": "uint256", "name": "", "type": "uint256"}
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "getTotalLogs",
-                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-                "name": "logs",
-                "outputs": [
-                    {"internalType": "string", "name": "dataHash", "type": "string"},
-                    {"internalType": "uint256", "name": "timestamp", "type": "uint256"}
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ]
-    }
+    "0x3eed3ac93286cc807e961db2ce07426c4042f4cb422c3b072dea96b53fd0d53e": [
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_hash",
+            "type": "string"
+          }
+        ],
+        "name": "addLog",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_index",
+            "type": "uint256"
+          }
+        ],
+        "name": "getLog",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getTotalLogs",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "logs",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "dataHash",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]
+  }
 }
 
 # Extract the correct ABI
